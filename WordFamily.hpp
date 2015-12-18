@@ -21,6 +21,7 @@ public:
 	int numOfWords();
 	void setWordHint(std::string wHint);
 	std::string getWordHint();
+	void reset();
 
 private:
 	std::vector<std::string> words;

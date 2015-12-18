@@ -24,7 +24,11 @@ WordFamily::WordFamily(int size, char l){
 }
 
 WordFamily::~WordFamily(){
+	if(partition != NULL)
+		delete partition;
+	partition = NULL;
 	words.clear();
+	positions.clear();
 }
 
 bool WordFamily::addPositions(int position){
@@ -166,6 +170,13 @@ std::string WordFamily::getWordHint(){
 		return partition->getWordHint();
 	else
 		return wordHint;
+}
+
+void WordFamily::reset(){
+	if(partition != NULL)
+		delete partition;
+
+	partition = NULL;
 }
 
 #endif
