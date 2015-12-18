@@ -42,7 +42,7 @@ bool WordFamily::addPositions(int position){
 
 bool WordFamily::addWord(std::string word){
 	if((int) word.length() == wordSize){
-		words.push_back(word);
+		words.insert(word);
 		return true;
 	} else {
 		return false;
@@ -177,6 +177,13 @@ void WordFamily::reset(){
 		delete partition;
 
 	partition = NULL;
+}
+
+std::string WordFamily::getWord(){
+	if(partition != NULL)
+		return partition->getWord();
+
+	return *(words.begin());
 }
 
 #endif

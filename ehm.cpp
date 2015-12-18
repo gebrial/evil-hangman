@@ -79,11 +79,13 @@ int main(){
 
 
 		// start guessing game
-		int tries = wSize * 2;
+		int tries = wSize;
+		tries = 10;
 		std::string wHint = current->getWordHint();
 		std::set<char> guessedLetters;
-		while(tries > 0){
+		while(tries > 0 && wHint.find('_') != std::string::npos){
 			// present info
+			std::cout << std::endl;
 			std::cout << "You have " << tries << " tries left." << std::endl;
 			std::cout << "Your guessed letters are:" << std::endl;
 			for(auto l : guessedLetters){
@@ -98,7 +100,9 @@ int main(){
 			std::cin >> guess;
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			if(guessedLetters.find(guess) != guessedLetters.end()){
+			if(guess < 'A' || guess > 'z' || (guess > 'Z' && guess < 'a')){
+				std::cout << "Please enter an english letter." << std::endl;
+			} else if (guessedLetters.find(guess) != guessedLetters.end()){
 				std::cout << "You have already tried that letter, try another." << std::endl;
 			} else {
 				// proper guess
@@ -110,6 +114,8 @@ int main(){
 				wHint = current->getWordHint();
 			}
 		}
+
+		std::cout << std::endl << "Your word was " << current->getWord() << std::endl;
 
 		guessedLetters.clear();
 		current->reset();

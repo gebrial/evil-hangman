@@ -22,9 +22,10 @@ public:
 	void setWordHint(std::string wHint);
 	std::string getWordHint();
 	void reset();
+	std::string getWord();
 
 private:
-	std::vector<std::string> words;
+	std::set<std::string> words;
 	std::set<int> positions;
 	int wordSize;
 	char letter;
