@@ -105,15 +105,21 @@ std::string WordFamily::addLetter(char l){
 				newFam->addPositions(p);
 			}
 
+			newFam->setWordHint(makeWordHint(l, newFam->getPositions()));
 			pos.push_back(newFam);
 		}
 	}
 
 	// set next word family to sub family with largest size
 	for(auto sub : pos){
+		sub->setWordHint(makeWordHint(l, sub->getPositions()));
 		if(partition == NULL)
 			partition = sub;
 		else if(sub->numOfWords() > partition->numOfWords())
+		//else if(sub->missingLetters() > partition->missingLetters())
+			partition = sub;
+		else if(sub->numOfWords() == partition->numOfWords()
+				&& sub->missingLetters() > partition->missingLetters())
 			partition = sub;
 	}
 
@@ -131,8 +137,15 @@ std::string WordFamily::addLetter(char l){
 		delete done;
 	}
 
-	partition->setWordHint(makeWordHint(l, partition->getPositions()));
+	//partition->setWordHint(makeWordHint(l, partition->getPositions()));
 	return partition->addLetter(l);
+}
+
+int WordFamily::missingLetters(){
+	if(partition == NULL)
+		return std::count(wordHint.begin(), wordHint.end(), '_');
+
+	return partition->missingLetters();
 }
 
 int WordFamily::getSize(){
@@ -148,6 +161,9 @@ std::set<int> WordFamily::getPositions(){
 }
 
 int WordFamily::numOfWords(){
+	if(partition != NULL)
+		return partition->numOfWords();
+
 	return words.size();
 }
 

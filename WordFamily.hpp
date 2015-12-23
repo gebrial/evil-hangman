@@ -23,6 +23,7 @@ public:
 	std::string getWordHint();
 	void reset();
 	std::string getWord();
+	int missingLetters();
 
 private:
 	std::set<std::string> words;

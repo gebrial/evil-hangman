@@ -1,4 +1,5 @@
-// g++ -g -Wall -std=c++11 ehm.cpp WordFamily.cpp
+// Compile with:
+// 	g++ -g -Wall -std=c++11 ehm.cpp WordFamily.cpp
 
 #include <iostream>
 #include <fstream>
@@ -34,6 +35,19 @@ int main(){
 			WordFamily * newSize = new WordFamily(size);
 			newSize->addWord(word);	
 			sizes.push_back(newSize);		
+		}
+	}
+
+	// sort sizes
+	// insert sort
+	for(int i = 0; i < sizes.size(); i++){
+		int j = i;
+		while(j>0 && sizes[j]->getSize() < sizes[j-1]->getSize()){
+			WordFamily * temp = sizes[j];
+			sizes[j] = sizes[j-1];
+			sizes[j-1] = temp;
+
+			j--;
 		}
 	}
 
@@ -112,6 +126,7 @@ int main(){
 					tries--;
 				}
 				wHint = current->getWordHint();
+				std::cout << "Number of words in word family: " << current->numOfWords() << std::endl;
 			}
 		}
 
